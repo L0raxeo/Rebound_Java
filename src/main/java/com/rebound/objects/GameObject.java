@@ -1,6 +1,7 @@
 package com.rebound.objects;
 
 import com.rebound.components.Component;
+import com.rebound.dataStructure.Transform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,29 @@ public class GameObject
         }
 
         return null;
+    }
+
+    public <T extends Component> List<T> getComponents(Class<T> componentClass)
+    {
+        List<T> comps = new ArrayList<>();
+
+        for (Component c : components)
+        {
+            if (componentClass.isAssignableFrom(c.getClass()))
+            {
+                try
+                {
+                    comps.add(componentClass.cast(c));
+                }
+                catch (ClassCastException e)
+                {
+                    e.printStackTrace();
+                    assert false : "Error: Casting component";
+                }
+            }
+        }
+
+        return comps;
     }
 
     public <T extends Component> boolean hasComponent(Class<T> componentClass)

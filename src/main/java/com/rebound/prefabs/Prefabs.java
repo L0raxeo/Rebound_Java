@@ -1,6 +1,8 @@
-package com.rebound.objects;
+package com.rebound.prefabs;
 
 import com.rebound.components.Component;
+import com.rebound.objects.GameObject;
+import com.rebound.dataStructure.Transform;
 import org.joml.Vector2f;
 
 public class Prefabs

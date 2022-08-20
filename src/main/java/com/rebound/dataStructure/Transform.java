@@ -1,4 +1,4 @@
-package com.rebound.objects;
+package com.rebound.dataStructure;
 
 import org.joml.Vector2f;
 

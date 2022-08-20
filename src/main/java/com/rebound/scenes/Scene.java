@@ -60,6 +60,14 @@ public abstract class Scene
         return result.orElse(null);
     }
 
+    public GameObject getGameObject(String name)
+    {
+        Optional<GameObject> result = this.gameObjects.stream()
+                .filter(gameObject -> gameObject.getName().equals(name))
+                .findFirst();
+        return result.orElse(null);
+    }
+
     public List<GameObject> getGameObjects(Vector2f coordinates)
     {
         return getGameObjects(coordinates.x, coordinates.y);
@@ -93,7 +101,7 @@ public abstract class Scene
     public abstract void update();
     public abstract void render(Graphics g);
 
-    public void loadProperties()
+    public void loadResources()
     {
 
     }

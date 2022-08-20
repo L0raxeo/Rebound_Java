@@ -1,7 +1,10 @@
 package com.rebound.window;
 
-import com.rebound.scenes.MainMenu;
+import com.rebound.input.keyboard.KeyManager;
+import com.rebound.input.mouse.MouseManager;
+import com.rebound.scenes.MainScene;
 import com.rebound.scenes.Scene;
+import com.rebound.ui.GuiLayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +29,9 @@ public class Window implements Runnable
     private static final List<Scene> scenes = new ArrayList<>();
     private static Scene currentScene = null;
     private Color backdrop;
+    private KeyManager keyListener;
+    private MouseManager mouseListener;
+    private GuiLayer guiLayer;
 
     private Window()
     {
@@ -79,10 +85,15 @@ public class Window implements Runnable
             }
 
             currentScene = targetScene;
-            currentScene.loadProperties();
+            currentScene.loadResources();
             currentScene.init();
             currentScene.start();
         }
+    }
+
+    public Scene getScene()
+    {
+        return currentScene;
     }
 
     @Override
@@ -109,12 +120,25 @@ public class Window implements Runnable
         canvas.setMinimumSize(size);
         canvas.setFocusable(false);
 
+        // Combine JFrame and Canvas
         frame.add(canvas);
         frame.pack();
 
+        // Create Input Listeners
+        keyListener = new KeyManager();
+        mouseListener = new MouseManager();
+
+        // Add Input Listeners
+        frame.addKeyListener(keyListener);
+        canvas.addMouseListener(mouseListener);
+        canvas.addMouseMotionListener(mouseListener);
+
+        // GuiLayer
+        guiLayer = GuiLayer.getInstance();
+
         setVisible(true);
 
-        changeScene(MainMenu.class);
+        changeScene(MainScene.class);
     }
 
     private void loop()
@@ -163,7 +187,11 @@ public class Window implements Runnable
 
     private void update()
     {
+        mouseListener.update();
+        keyListener.update();
         currentScene.update();
+        //guiLayer is updated in Mouse Manager
+        //guiLayer.update();
     }
 
     private void render()
@@ -185,6 +213,7 @@ public class Window implements Runnable
         g.fillRect(0, 0, getWidth(), getHeight());
 
         currentScene.render(g);
+        guiLayer.render(g);
 
         // end drawing
         bs.show();
