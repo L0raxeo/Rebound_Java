@@ -32,12 +32,6 @@ public abstract class Bounds extends Component
         bounds.setRect(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.scale.x, gameObject.transform.scale.y);
     }
 
-    @Override
-    public void render(Graphics g) {
-        g.setColor(Color.RED);
-        g.drawRect((int) bounds.getBounds().getX(), (int) bounds.getBounds().getY(), (int) bounds.getBounds().getWidth(), (int) bounds.getBounds().getHeight());
-    }
-
     public List<Collision> findGameObjectsInPath(Vector2f velocity)
     {
         List<Collision> result = new ArrayList<>();
