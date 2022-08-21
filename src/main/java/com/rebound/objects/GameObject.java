@@ -75,17 +75,6 @@ public class GameObject
         return false;
     }
 
-    public List<Component> getAllDebugComponents()
-    {
-        List<Component> debugComponents = new ArrayList<>();
-
-        for (Component c : components)
-            if (c.isDebug())
-                debugComponents.add(c);
-
-        return debugComponents;
-    }
-
     public <T extends Component> void removeComponent(Class<T> componentClass)
     {
         for (int i=0; i < components.size(); i++) {
@@ -104,11 +93,11 @@ public class GameObject
         c.gameObject = this;
     }
 
-    public void update() {
+    public void update(double dt) {
         for (Component component : components)
         {
             if (!component.isDisabled())
-                component.update();
+                component.update(dt);
         }
     }
 

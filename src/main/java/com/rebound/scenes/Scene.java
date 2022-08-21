@@ -1,5 +1,6 @@
 package com.rebound.scenes;
 
+import com.rebound.components.Component;
 import com.rebound.objects.GameObject;
 import com.rebound.window.Window;
 import org.joml.Vector2f;
@@ -98,7 +99,18 @@ public abstract class Scene
         return this.gameObjects;
     }
 
-    public abstract void update();
+    public List<GameObject> getGameObjectsWithComponent(Class<? extends Component> componentClass)
+    {
+        List<GameObject> result = new ArrayList<>();
+
+        for (GameObject go : getGameObjects())
+            if (go.hasComponent(componentClass))
+                result.add(go);
+
+        return result;
+    }
+
+    public abstract void update(double dt);
     public abstract void render(Graphics g);
 
     public void loadResources()

@@ -1,6 +1,8 @@
 package com.rebound.components;
 
 import com.rebound.objects.GameObject;
+import com.rebound.physics.Collision;
+import com.rebound.physics.Trigger;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -17,7 +19,6 @@ public abstract class Component
     private int uid = -1;
 
     private boolean disabled = false;
-    private boolean isDebug = false;
 
     public transient GameObject gameObject = null;
 
@@ -26,9 +27,13 @@ public abstract class Component
 
     }
 
-    public void update(){}
+    public void update(double dt){}
 
     public void render(Graphics g) {}
+
+    public void collision(Collision collision) {}
+
+    public void trigger(Trigger trigger) {}
 
     public void generateId()
     {
@@ -59,22 +64,6 @@ public abstract class Component
     public boolean isDisabled()
     {
         return this.disabled;
-    }
-
-    public void setDebug(boolean isDebug)
-    {
-        this.isDebug = isDebug;
-
-        if (isDebug)
-            disable();
-    }
-
-    /**
-     * @return whether this component is part of the debug/F3 menu
-     */
-    public boolean isDebug()
-    {
-        return isDebug;
     }
 
     /**

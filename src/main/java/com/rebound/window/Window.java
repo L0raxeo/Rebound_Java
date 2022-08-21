@@ -91,7 +91,7 @@ public class Window implements Runnable
         }
     }
 
-    public Scene getScene()
+    public static Scene getScene()
     {
         return currentScene;
     }
@@ -159,7 +159,7 @@ public class Window implements Runnable
             while (delta >= 1)
             {
                 ticks++;
-                update();
+                update(delta);
                 delta -= 1;
             }
 
@@ -185,11 +185,11 @@ public class Window implements Runnable
         }
     }
 
-    private void update()
+    private void update(double dt)
     {
         mouseListener.update();
         keyListener.update();
-        currentScene.update();
+        currentScene.update(dt);
         //guiLayer is updated in Mouse Manager
         //guiLayer.update();
     }
