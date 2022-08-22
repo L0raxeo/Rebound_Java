@@ -44,9 +44,6 @@ public final class KeyManager implements KeyListener
         {
             if (k.getKeyCode() == key && k.getState() == KeyState.HELD)
                 return true;
-
-            if (k.getKeyCode() == key && k.getState() == KeyState.PRESSED)
-                return true;
         }
 
         return false;
@@ -132,7 +129,7 @@ public final class KeyManager implements KeyListener
     {
         for (Key k : allKeys)
         {
-            if (k.getState() == KeyState.HELD)
+            if (k.getState() == KeyState.HELD && k.getKeyCode() == e.getKeyCode())
                 return;
 
             if (k.getKeyCode() == e.getKeyCode() && k.getState() == KeyState.IDLE)

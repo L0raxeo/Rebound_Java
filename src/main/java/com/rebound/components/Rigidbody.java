@@ -79,6 +79,9 @@ public class Rigidbody extends Component
                     else if (velocity.y > 0)
                         velocity.y -= friction / 10;
                 }
+
+                for (Component c : gameObject.getAllComponents())
+                    c.onCollision(collider);
             }
         }
 
@@ -102,6 +105,16 @@ public class Rigidbody extends Component
     public void move(Vector2f velocity)
     {
         this.velocity = velocity;
+    }
+
+    public void moveX(float x)
+    {
+        this.velocity.x = x;
+    }
+
+    public void moveY(float y)
+    {
+        this.velocity.y = y;
     }
 
     public Vector2f getVelocity()

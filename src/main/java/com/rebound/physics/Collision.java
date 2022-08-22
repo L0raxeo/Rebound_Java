@@ -58,7 +58,7 @@ public class Collision
         // Q4
         else if (oCenterX < cCenterX && oCenterY > cCenterY)
         {
-            if (ox2 - cx1 > cy2 - ox1)
+            if (ox2 - cx1 > cy2 - oy1)
                 return TOP;
             else return RIGHT;
         }

@@ -96,6 +96,11 @@ public class Window implements Runnable
         return currentScene;
     }
 
+    public static Rectangle getWindowBounds()
+    {
+        return new Rectangle(0, 0, getWidth(), getHeight());
+    }
+
     @Override
     public void run()
     {

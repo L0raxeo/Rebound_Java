@@ -35,6 +35,8 @@ public abstract class Component
 
     public void trigger(Trigger trigger) {}
 
+    public void onCollision(Collision collision) {}
+
     public void generateId()
     {
         if (this.uid == -1)

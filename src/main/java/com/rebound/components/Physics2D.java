@@ -29,8 +29,8 @@ public class Physics2D extends Component
     {
         velocity.y += 0.5 * dt;
 
-        if (velocity.y > 10)
-            velocity.y = 10;
+        if (velocity.y > 15)
+            velocity.y = 15;
     }
 
 }
