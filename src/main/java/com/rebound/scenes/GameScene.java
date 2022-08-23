@@ -10,7 +10,7 @@ import org.joml.Vector2f;
 import java.awt.*;
 import java.util.ConcurrentModificationException;
 
-public class MainScene extends Scene
+public class GameScene extends Scene
 {
 
     @Override
@@ -32,7 +32,7 @@ public class MainScene extends Scene
                 new Vector2f(50, 400),
                 new Vector2f(400, 32), 0,
                 new BoxBounds(new Rectangle()),
-                new RectRenderer(Color.GRAY, false)
+                new RectRenderer(Color.LIGHT_GRAY, false)
         ));
     }
 

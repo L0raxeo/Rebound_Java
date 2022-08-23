@@ -22,12 +22,12 @@ public class Physics2D extends Component
         if (velocity == null)
             return;
 
-        fall(dt);
+        fall();
     }
 
-    private void fall(double dt)
+    private void fall()
     {
-        velocity.y += 0.5 * dt;
+        velocity.y += 0.5;
 
         if (velocity.y > 15)
             velocity.y = 15;

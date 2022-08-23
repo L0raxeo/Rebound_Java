@@ -2,7 +2,7 @@ package com.rebound.window;
 
 import com.rebound.input.keyboard.KeyManager;
 import com.rebound.input.mouse.MouseManager;
-import com.rebound.scenes.MainScene;
+import com.rebound.scenes.GameScene;
 import com.rebound.scenes.Scene;
 import com.rebound.ui.GuiLayer;
 
@@ -143,7 +143,7 @@ public class Window implements Runnable
 
         setVisible(true);
 
-        changeScene(MainScene.class);
+        changeScene(GameScene.class);
     }
 
     private void loop()

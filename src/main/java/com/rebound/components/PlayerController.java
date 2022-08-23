@@ -24,10 +24,10 @@ public class PlayerController extends Component
     public void update(double dt)
     {
         if (KeyManager.isHeld(KeyEvent.VK_LEFT))
-            rigidbody.moveX(-3);
+            rigidbody.moveX((float) (-3));
 
         if (KeyManager.isHeld(KeyEvent.VK_RIGHT))
-            rigidbody.moveX(3);
+            rigidbody.moveX((float) (3));
 
         if (KeyManager.onRelease(KeyEvent.VK_LEFT))
         {
