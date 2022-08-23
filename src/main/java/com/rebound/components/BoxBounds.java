@@ -12,4 +12,9 @@ public class BoxBounds extends Bounds
         super(bounds);
     }
 
+    public BoxBounds()
+    {
+        super();
+    }
+
 }

@@ -20,18 +20,18 @@ public class Collision
 
     private CollisionType resolveCollision(Transform ot, Transform ct, Vector2f velocity)
     {
-        float ox1 = ot.position.x;
+        float ox1 = ot.getScreenPosition().x;
         float ox2 = ox1 + ot.scale.x;
-        float oy1 = ot.position.y;
+        float oy1 = ot.getScreenPosition().y;
         float oy2 = oy1 + ot.scale.y;
-        float cx1 = ct.position.x;
+        float cx1 = ct.getScreenPosition().x;
         float cx2 = cx1 + ct.scale.x;
-        float cy1 = ct.position.y;
+        float cy1 = ct.getScreenPosition().y;
         float cy2 = cy1 + ct.scale.y;
-        float oCenterX = ot.position.x + (ot.scale.x / 2);
-        float oCenterY = ot.position.y + (ot.scale.y / 2);
-        float cCenterX = ct.position.x + (ct.scale.x / 2);
-        float cCenterY = ct.position.y + (ct.scale.y / 2);
+        float oCenterX = ot.getScreenPosition().x + (ot.scale.x / 2);
+        float oCenterY = ot.getScreenPosition().y + (ot.scale.y / 2);
+        float cCenterX = ct.getScreenPosition().x + (ct.scale.x / 2);
+        float cCenterY = ct.getScreenPosition().y + (ct.scale.y / 2);
 
         // Q1
         if (oCenterX < cCenterX && oCenterY < cCenterY)
@@ -51,7 +51,7 @@ public class Collision
         // Q3
         else if (oCenterX > cCenterX && oCenterY > cCenterY)
         {
-            if (cx2 - ox1 > cy2 - cy1)
+            if (cx2 - ox1 > cy2 - oy1)
                 return TOP;
             else return LEFT;
         }

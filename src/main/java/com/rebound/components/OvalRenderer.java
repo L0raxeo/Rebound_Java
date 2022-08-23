@@ -23,9 +23,9 @@ public class OvalRenderer extends Component
         Transform t = gameObject.transform;
         g.setColor(this.color);
         if (isSolid)
-            g.fillOval((int) (t.position.x + Camera.xOffset()), (int) (t.position.y + Camera.yOffset()), (int) t.scale.x, (int) t.scale.y);
+            g.fillOval((int) (t.getScreenPosition().x + Camera.xOffset()), (int) (t.getScreenPosition().y + Camera.yOffset()), (int) t.scale.x, (int) t.scale.y);
         else
-            g.drawOval((int) (t.position.x + Camera.xOffset()), (int) (t.position.y + Camera.yOffset()), (int) t.scale.x, (int) t.scale.y);
+            g.drawOval((int) (t.getScreenPosition().x + Camera.xOffset()), (int) (t.getScreenPosition().y + Camera.yOffset()), (int) t.scale.x, (int) t.scale.y);
     }
 
     public void setColor(Color color)

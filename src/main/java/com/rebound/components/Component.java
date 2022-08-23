@@ -2,7 +2,6 @@ package com.rebound.components;
 
 import com.rebound.objects.GameObject;
 import com.rebound.physics.Collision;
-import com.rebound.physics.Trigger;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -33,9 +32,9 @@ public abstract class Component
 
     public void collision(Collision collision) {}
 
-    public void trigger(Trigger trigger) {}
-
     public void onCollision(Collision collision) {}
+
+    public void onTrigger(Collision trigger) {}
 
     public void generateId()
     {

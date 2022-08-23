@@ -5,8 +5,6 @@ import org.joml.Vector2f;
 public class Camera
 {
 
-    private static Camera instance;
-
     private static float xOffset;
     private static float yOffset;
 
@@ -16,11 +14,18 @@ public class Camera
         yOffset = 0;
     }
 
-    // position on a normal coordinate plane
+    /**
+     * @param position world position
+     */
     public static void setPosition(Vector2f position)
     {
         xOffset = -position.x;
         yOffset = position.y;
+    }
+
+    public static Vector2f getPosition()
+    {
+        return new Vector2f(-xOffset(), yOffset());
     }
 
     public static void move(Vector2f vel)

@@ -1,6 +1,7 @@
 package com.rebound.components;
 
 import com.rebound.dataStructure.Transform;
+import com.rebound.physics.Collision;
 import com.rebound.window.Camera;
 
 import java.awt.*;
@@ -23,9 +24,9 @@ public class RectRenderer extends Component
         Transform t = gameObject.transform;
         g.setColor(this.color);
         if (isSolid)
-            g.fillRect((int) (t.position.x + Camera.xOffset()), (int) (t.position.y + Camera.yOffset()), (int) t.scale.x, (int) t.scale.y);
+            g.fillRect((int) (t.getScreenPosition().x + Camera.xOffset()), (int) (t.getScreenPosition().y + Camera.yOffset()), (int) t.scale.x, (int) t.scale.y);
         else
-            g.drawRect((int) (t.position.x + Camera.xOffset()), (int) (t.position.y + Camera.yOffset()), (int) t.scale.x, (int) t.scale.y);
+            g.drawRect((int) (t.getScreenPosition().x + Camera.xOffset()), (int) (t.getScreenPosition().y + Camera.yOffset()), (int) t.scale.x, (int) t.scale.y);
     }
 
     public void setColor(Color color)

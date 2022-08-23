@@ -9,7 +9,7 @@ public class Rigidbody extends Component
 {
 
     public Vector2f velocity;
-    private float friction;
+    private final float friction;
 
     public Rigidbody(float friction)
     {
@@ -30,10 +30,19 @@ public class Rigidbody extends Component
                 if (collider.collider.equals(this.gameObject))
                     continue;
 
-                if (collider.type == CollisionType.TOP && velocity.y < 0)
-                {
+                if (collider.type == CollisionType.TOP && velocity.y < 0) {
                     velocity.y = 0;
-                    gameObject.transform.position.y = collider.collider.transform.position.y + collider.collider.transform.scale.y;
+                    gameObject.transform.getScreenPosition().y = collider.collider.transform.getScreenPosition().y + collider.collider.transform.scale.y;
+                    teleportY = true;
+
+                    //friction
+                    if (velocity.x < 0)
+                        velocity.x += friction / 10;
+                    else if (velocity.x > 0)
+                        velocity.x -= friction / 10;
+                } else if (collider.type == CollisionType.BOTTOM && velocity.y > 0) {
+                    velocity.y = 0;
+                    gameObject.transform.getScreenPosition().y = collider.collider.transform.getScreenPosition().y - gameObject.transform.scale.y;
                     teleportY = true;
 
                     //friction
@@ -42,23 +51,10 @@ public class Rigidbody extends Component
                     else if (velocity.x > 0)
                         velocity.x -= friction / 10;
                 }
-                else if (collider.type == CollisionType.BOTTOM && velocity.y > 0)
-                {
-                    velocity.y = 0;
-                    gameObject.transform.position.y = collider.collider.transform.position.y - gameObject.transform.scale.y;
-                    teleportY = true;
 
-                    //friction
-                    if (velocity.x < 0)
-                        velocity.x += friction / 10;
-                    else if (velocity.x > 0)
-                        velocity.x -= friction / 10;
-                }
-
-                if (collider.type == CollisionType.RIGHT && velocity.x > 0)
-                {
+                if (collider.type == CollisionType.RIGHT && velocity.x > 0) {
                     velocity.x = 0;
-                    gameObject.transform.position.x = collider.collider.transform.position.x - gameObject.transform.scale.x;
+                    gameObject.transform.getScreenPosition().x = collider.collider.transform.getScreenPosition().x - gameObject.transform.scale.x;
                     teleportX = true;
 
                     //friction
@@ -66,11 +62,9 @@ public class Rigidbody extends Component
                         velocity.y += friction / 10;
                     else if (velocity.y > 0)
                         velocity.y -= friction / 10;
-                }
-                else if (collider.type == CollisionType.LEFT && velocity.x < 0)
-                {
+                } else if (collider.type == CollisionType.LEFT && velocity.x < 0) {
                     velocity.x = 0;
-                    gameObject.transform.position.x = collider.collider.transform.position.x + collider.collider.transform.scale.x;
+                    gameObject.transform.getScreenPosition().x = collider.collider.transform.getScreenPosition().x + collider.collider.transform.scale.x;
                     teleportX = true;
 
                     //friction
@@ -81,7 +75,9 @@ public class Rigidbody extends Component
                 }
 
                 for (Component c : gameObject.getAllComponents())
+                {
                     c.onCollision(collider);
+                }
             }
         }
 
@@ -91,10 +87,10 @@ public class Rigidbody extends Component
             velocity.y = 0;
 
         if (!teleportX)
-            gameObject.transform.position.x += velocity.x * dt;
+            gameObject.transform.getScreenPosition().x += velocity.x * dt;
 
         if (!teleportY)
-            gameObject.transform.position.y += velocity.y * dt;
+            gameObject.transform.getScreenPosition().y += velocity.y * dt;
     }
 
     public void addForce(Vector2f force)

@@ -1,7 +1,9 @@
 package com.rebound.physics;
 
 import com.rebound.components.Component;
+import com.rebound.components.Spikes;
 import com.rebound.objects.GameObject;
+import com.rebound.window.Camera;
 import com.rebound.window.Window;
 import org.joml.Vector2f;
 
@@ -19,17 +21,25 @@ enum BoundsType {
 public abstract class Bounds extends Component
 {
 
-    protected Rectangle bounds;
+    public Rectangle bounds;
+    private boolean presetBounds = false;
 
     public Bounds(Rectangle bounds)
     {
-        this.bounds = bounds;
+        presetBounds = true;
+        this.bounds = new Rectangle(bounds.x, Window.getHeight() - bounds.y, bounds.width, bounds.height);
+    }
+
+    public Bounds()
+    {
+        this.bounds = new Rectangle();
     }
 
     @Override
     public void update(double dt)
     {
-        bounds.setRect(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.scale.x, gameObject.transform.scale.y);
+        if (!presetBounds)
+            bounds.setRect(gameObject.transform.getScreenPosition().x, gameObject.transform.getScreenPosition().y, gameObject.transform.scale.x, gameObject.transform.scale.y);
     }
 
     public List<Collision> findGameObjectsInPath(Vector2f velocity)

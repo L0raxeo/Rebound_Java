@@ -80,7 +80,7 @@ public abstract class Scene
 
         for (GameObject go : gameObjects)
         {
-            Vector2f pos = go.transform.position;
+            Vector2f pos = go.transform.getScreenPosition();
 
             float ax = pos.x;
             float ay = pos.y;
