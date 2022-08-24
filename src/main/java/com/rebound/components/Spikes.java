@@ -33,4 +33,11 @@ public class Spikes extends Component
         }
     }
 
+    @Override
+    public void onCollision(Collision collision)
+    {
+        if (collision.origin.getName().equals("Player"))
+            collision.origin.die();
+    }
+
 }

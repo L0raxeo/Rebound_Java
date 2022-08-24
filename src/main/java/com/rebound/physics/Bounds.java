@@ -55,7 +55,7 @@ public abstract class Bounds extends Component
 
             if (predictedBounds.intersects(go.getComponent(Bounds.class).bounds))
             {
-                result.add(new Collision(velocity, gameObject.transform, go));
+                result.add(new Collision(velocity, gameObject.transform, go, gameObject));
             }
         }
 

@@ -48,7 +48,16 @@ public class PlayerController extends Component
 
         // moves camera
         if (Window.getHeight() - gameObject.transform.getScreenPosition().y - Camera.yOffset() > (Window.getHeight() / 4f) * 3)
-            Camera.move(new Vector2f(0, 2));
+            Camera.move(new Vector2f(0, 4));
+
+        if (gameObject.transform.position().x + gameObject.transform.scale.x < 0 && rigidbody.velocity.x < 0)
+        {
+            gameObject.transform.setPosition(new Vector2f(Window.getWidth(), gameObject.transform.position().y));
+        }
+        else if (gameObject.transform.position().x > Window.getWidth() && rigidbody.velocity.x > 0)
+        {
+            gameObject.transform.setPosition(new Vector2f(-gameObject.transform.scale.x, gameObject.transform.position().y));
+        }
     }
 
     private void jump()
@@ -71,8 +80,8 @@ public class PlayerController extends Component
         if (collision.type == CollisionType.BOTTOM)
             jumpedSinceGrounded = 0;
 
-        if (collision.collider.hasComponent(DeathTrigger.class))
-            gameObject.die();
+        for (Component c : collision.collider.getAllComponents())
+            c.onCollision(collision);
     }
 
 }

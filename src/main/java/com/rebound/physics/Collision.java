@@ -11,11 +11,13 @@ public class Collision
 
     public final CollisionType type;
     public final GameObject collider;
+    public final GameObject origin;
 
-    public Collision(Vector2f velocity, Transform originTransform, GameObject collider)
+    public Collision(Vector2f velocity, Transform originTransform, GameObject collider, GameObject origin)
     {
         this.collider = collider;
         this.type = resolveCollision(originTransform, collider.transform, velocity);
+        this.origin = origin;
     }
 
     private CollisionType resolveCollision(Transform ot, Transform ct, Vector2f velocity)

@@ -5,6 +5,9 @@ import com.rebound.physics.Collision;
 import com.rebound.physics.CollisionType;
 import org.joml.Vector2f;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Rigidbody extends Component
 {
 
@@ -91,12 +94,30 @@ public class Rigidbody extends Component
 
         if (!teleportY)
             gameObject.transform.getScreenPosition().y += velocity.y * dt;
+
+        if(!moveForces.isEmpty())
+        {
+            int velX = 0;
+            int velY = 0;
+
+            for (Vector2f v : moveForces)
+            {
+                velX += v.x;
+                velY += v.y;
+            }
+
+            velocity = new Vector2f(velX, velY);
+        }
+
+        moveForces.clear();
     }
 
     public void addForce(Vector2f force)
     {
         velocity.add(force);
     }
+
+    private List<Vector2f> moveForces = new ArrayList<>();
 
     public void move(Vector2f velocity)
     {
