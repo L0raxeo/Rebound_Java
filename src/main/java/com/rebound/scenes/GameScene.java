@@ -2,35 +2,33 @@ package com.rebound.scenes;
 
 import com.rebound.components.*;
 import com.rebound.components.Component;
-import com.rebound.dataStructure.Transform;
+import com.rebound.dataStructure.AssetPool;
 import com.rebound.objects.GameObject;
 import com.rebound.prefabs.Prefabs;
+import com.rebound.ui.GuiText;
 import com.rebound.window.Camera;
 import com.rebound.window.Window;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 
 import java.awt.*;
 import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 
 public class GameScene extends Scene
 {
 
     private LevelGenerator levelGenerator;
+    private int points = 0;
+
+    @Override
+    public void loadResources()
+    {
+        AssetPool.getFont("assets/fonts/default_font.ttf", 24);
+    }
 
     @Override
     public void init()
     {
-        addGameObjectToScene(Prefabs.generate(
-                "Level Generator",
-                new Vector2f(),
-                new Vector2f(), 0,
-                new LevelGenerator()
-        ));
-
-        levelGenerator = getGameObject("Level Generator").getComponent(LevelGenerator.class);
-        levelGenerator.nextLevelY = 0;
-
         addGameObjectToScene(Prefabs.generate(
                 "Player",
                 new Vector2f((Window.getWidth() / 2f) - 16, 128),
@@ -47,6 +45,16 @@ public class GameScene extends Scene
 
     private void createFirstLevel()
     {
+        addGameObjectToScene(Prefabs.generate(
+                "Level Generator",
+                new Vector2f(),
+                new Vector2f(), 0,
+                new LevelGenerator()
+        ));
+
+        levelGenerator = getGameObject("Level Generator").getComponent(LevelGenerator.class);
+        levelGenerator.nextLevelY = 0;
+
         addGameObjectToScene(Prefabs.generate(
                 "Floor",
                 new Vector2f((Window.getWidth() / 2f) - 208, 64),
@@ -65,12 +73,21 @@ public class GameScene extends Scene
         levelGenerator.lastObjPos = new Vector2f(128, 380);
 
         addGameObjectToScene(levelGenerator.getSpikes(new Vector2f(64, 80), new Vector2f(16 * 3, 16)));
+
         levelGenerator.generate();
+    }
+
+    @Override
+    public void gui(Graphics g)
+    {
+        GuiText.drawString(g, String.valueOf(points), new Vector2i(16, 32), false, Color.LIGHT_GRAY, AssetPool.getFont("assets/fonts/default_font.ttf", 24));
     }
 
     @Override
     public void update(double dt)
     {
+        points = (int) Camera.getPosition().y;
+
         try {
             for (GameObject go : getGameObjects()) {
                 // destroys objects below the camera
@@ -96,6 +113,8 @@ public class GameScene extends Scene
     @Override
     public void render(Graphics g)
     {
+        gui(g);
+
         try
         {
             for (GameObject go : getGameObjects())

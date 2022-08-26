@@ -1,6 +1,5 @@
 package com.rebound.components;
 
-import com.rebound.dataStructure.Transform;
 import com.rebound.objects.GameObject;
 import com.rebound.prefabs.Prefabs;
 import com.rebound.window.Camera;
@@ -9,7 +8,6 @@ import org.joml.Vector2f;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -64,33 +62,38 @@ public class LevelGenerator extends Component
             position.x += -100;
         }
 
-        List<GameObject> randomPrefab = new ArrayList<>();
-
         int r = new Random().nextInt(7);
 
-        switch (r)
+        return new ArrayList<>(getPrefabById(r, position));
+    }
+
+    private List<GameObject> getPrefabById(int id, Vector2f position)
+    {
+        List<GameObject> list = new ArrayList<>();
+
+        switch (id)
         {
             case 1:
-                randomPrefab.add(getMovingFloor(position));
+                list.add(getMovingFloor(position));
                 break;
             case 2:
-                randomPrefab.addAll(getSpikedFloor(position, 2, 3));
+                list.addAll(getSpikedFloor(position, 2, 3));
                 break;
             case 3:
-                randomPrefab.addAll(getFloorKillerWall(position));
+                list.addAll(getFloorKillerWall(position));
                 break;
             case 4:
-                randomPrefab.addAll(getFloorWall(position));
+                list.addAll(getFloorWall(position));
                 break;
             case 5:
-                randomPrefab.add(getKillerFloorPrefab(position, true, true));
+                list.add(getKillerFloorPrefab(position, true, true));
                 break;
             case 6:
-                randomPrefab.add(getFloor(position, true));
+                list.add(getFloor(position, true));
                 break;
         }
 
-        return randomPrefab;
+        return list;
     }
 
     public GameObject getMovingFloor(Vector2f position)
@@ -110,6 +113,15 @@ public class LevelGenerator extends Component
         List<GameObject> spikedFloor = new ArrayList<>();
         spikedFloor.add(getFloor(position, false));
         int xIndex = new Random().nextInt(max + 1 - min) + min;
+        spikedFloor.add(getSpikes(new Vector2f(position.x + (16 * xIndex), position.y + 16), new Vector2f(16, 16)));
+
+        return spikedFloor;
+    }
+
+    public List<GameObject> getSpikedFloor(Vector2f position, int xIndex)
+    {
+        List<GameObject> spikedFloor = new ArrayList<>();
+        spikedFloor.add(getFloor(position, false));
         spikedFloor.add(getSpikes(new Vector2f(position.x + (16 * xIndex), position.y + 16), new Vector2f(16, 16)));
 
         return spikedFloor;
@@ -166,6 +178,19 @@ public class LevelGenerator extends Component
 
         if (randomX)
             size.x = 64 + (16 * new Random().nextInt(4));
+
+        return Prefabs.generate(
+                "Floor",
+                position,
+                size, 0,
+                new BoxBounds(),
+                new RectRenderer(Color.LIGHT_GRAY, false)
+        );
+    }
+
+    public GameObject getFloor(Vector2f position, float sizeX)
+    {
+        Vector2f size = new Vector2f(sizeX, 16);
 
         return Prefabs.generate(
                 "Floor",

@@ -18,6 +18,7 @@ public class GameObject
     private boolean doSerialization = true;
     private transient boolean isDead = false;
     private final int zIndex;
+    public boolean isPlayer = false;
 
     public GameObject(String name, Transform transform, int zIndex) {
         this.name = name;

@@ -14,7 +14,6 @@ public class PlayerController extends Component
 
     private Rigidbody rigidbody;
     private int jumpedSinceGrounded = 0;
-    private boolean isGrounded;
 
     @Override
     public void start()
@@ -81,7 +80,8 @@ public class PlayerController extends Component
             jumpedSinceGrounded = 0;
 
         for (Component c : collision.collider.getAllComponents())
-            c.onCollision(collision);
+            if (!c.equals(this))
+                c.onCollision(collision);
     }
 
 }

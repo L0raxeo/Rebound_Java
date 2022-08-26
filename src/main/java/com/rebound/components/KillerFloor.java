@@ -58,7 +58,7 @@ public class KillerFloor extends Component
     @Override
     public void onCollision(Collision collision)
     {
-        if (collision.origin.getName().equals("Player") && isKilling)
+        if (collision.origin.hasComponent(PlayerController.class) && isKilling)
             collision.origin.die();
     }
 

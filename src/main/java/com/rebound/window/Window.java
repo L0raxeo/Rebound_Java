@@ -3,6 +3,7 @@ package com.rebound.window;
 import com.rebound.input.keyboard.KeyManager;
 import com.rebound.input.mouse.MouseManager;
 import com.rebound.scenes.GameScene;
+import com.rebound.scenes.MenuScene;
 import com.rebound.scenes.Scene;
 import com.rebound.ui.GuiLayer;
 
@@ -84,11 +85,21 @@ public class Window implements Runnable
                 }
             }
 
+            GuiLayer.getInstance().clear();
             currentScene = targetScene;
             currentScene.loadResources();
             currentScene.init();
             currentScene.start();
         }
+    }
+
+    public Class<? extends Scene> getSceneFromSimpleClassName(String simpleClassName)
+    {
+        if (simpleClassName.equals(GameScene.class.getSimpleName()))
+            return GameScene.class;
+        else if (simpleClassName.equals(MenuScene.class.getSimpleName()))
+            return MenuScene.class;
+        else return null;
     }
 
     public static Scene getScene()
@@ -143,7 +154,7 @@ public class Window implements Runnable
 
         setVisible(true);
 
-        changeScene(GameScene.class);
+        changeScene(MenuScene.class);
     }
 
     private void loop()
@@ -195,8 +206,6 @@ public class Window implements Runnable
         mouseListener.update();
         keyListener.update();
         currentScene.update(dt);
-        //guiLayer is updated in Mouse Manager
-        //guiLayer.update();
     }
 
     private void render()

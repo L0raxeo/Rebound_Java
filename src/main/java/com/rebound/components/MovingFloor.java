@@ -12,12 +12,15 @@ public class MovingFloor extends Component
 {
 
     private int targetX;
-    private int velX;
+    public int velX;
+
+    public MovingFloor() {}
 
     @Override
     public void start()
     {
         velX = new Random().nextInt(2) + 1;
+
         targetX = (int) (gameObject.transform.position().x + 256);
     }
 
@@ -49,7 +52,7 @@ public class MovingFloor extends Component
     @Override
     public void onCollision(Collision collision)
     {
-        if (collision.origin.getName().equals("Player") && collision.type == CollisionType.BOTTOM)
+        if (collision.origin.hasComponent(PlayerController.class) && collision.type == CollisionType.BOTTOM)
             collision.origin.getComponent(Rigidbody.class).moveX(velX);
     }
 }

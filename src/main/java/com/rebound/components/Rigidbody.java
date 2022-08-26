@@ -30,6 +30,9 @@ public class Rigidbody extends Component
         {
             for (Collision collider : gameObject.getComponent(Bounds.class).findGameObjectsInPath(velocity))
             {
+                if (collider.collider.isPlayer)
+                    continue;
+
                 if (collider.collider.equals(this.gameObject))
                     continue;
 

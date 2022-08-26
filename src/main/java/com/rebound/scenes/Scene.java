@@ -113,6 +113,11 @@ public abstract class Scene
     public abstract void update(double dt);
     public abstract void render(Graphics g);
 
+    public void gui(Graphics g)
+    {
+
+    }
+
     public void loadResources()
     {
 

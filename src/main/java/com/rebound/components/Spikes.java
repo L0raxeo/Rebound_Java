@@ -36,7 +36,7 @@ public class Spikes extends Component
     @Override
     public void onCollision(Collision collision)
     {
-        if (collision.origin.getName().equals("Player"))
+        if (collision.origin.hasComponent(PlayerController.class))
             collision.origin.die();
     }
 
