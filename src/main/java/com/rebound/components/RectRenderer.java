@@ -1,7 +1,6 @@
 package com.rebound.components;
 
 import com.rebound.dataStructure.Transform;
-import com.rebound.physics.Collision;
 import com.rebound.window.Camera;
 
 import java.awt.*;
@@ -10,7 +9,7 @@ public class RectRenderer extends Component
 {
 
     private Color color;
-    private boolean isSolid;
+    private final boolean isSolid;
 
     public RectRenderer(Color color, boolean isSolid)
     {
@@ -32,11 +31,6 @@ public class RectRenderer extends Component
     public void setColor(Color color)
     {
         this.color = color;
-    }
-
-    public void setSolid(boolean isSolid)
-    {
-        this.isSolid = isSolid;
     }
 
 }

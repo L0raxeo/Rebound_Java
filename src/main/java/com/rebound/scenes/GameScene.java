@@ -33,7 +33,7 @@ public class GameScene extends Scene
         addGameObjectToScene(Prefabs.generate(
                 "Player",
                 new Vector2f((Window.getWidth() / 2f) - 16, 128),
-                new Vector2f(32, 32), 0,
+                new Vector2f(32, 32),
                 new Rigidbody(1),
                 new Physics2D(),
                 new BoxBounds(),
@@ -49,7 +49,7 @@ public class GameScene extends Scene
         addGameObjectToScene(Prefabs.generate(
                 "Level Generator",
                 new Vector2f(),
-                new Vector2f(), 0,
+                new Vector2f(),
                 new LevelGenerator()
         ));
 
@@ -59,7 +59,7 @@ public class GameScene extends Scene
         addGameObjectToScene(Prefabs.generate(
                 "Floor",
                 new Vector2f((Window.getWidth() / 2f) - 208, 64),
-                new Vector2f(418, 32), 0,
+                new Vector2f(418, 32),
                 new BoxBounds(),
                 new RectRenderer(Color.LIGHT_GRAY, false)
         ));
@@ -144,7 +144,7 @@ public class GameScene extends Scene
     @Override
     public void onDestroy()
     {
-        Camera.setPosition(new Vector2f(0, 0));
+        Camera.reset();
         points = 0;
 
         getGameObjects().clear();

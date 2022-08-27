@@ -57,12 +57,4 @@ public class MBtn
         return state;
     }
 
-    /**
-     * Gets queued state of mouse button.
-     */
-    public MBtnState getQueuedState()
-    {
-        return queuedState;
-    }
-
 }

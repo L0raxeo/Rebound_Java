@@ -71,26 +71,13 @@ public class LevelGenerator extends Component
     {
         List<GameObject> list = new ArrayList<>();
 
-        switch (id)
-        {
-            case 1:
-                list.add(getMovingFloor(position));
-                break;
-            case 2:
-                list.addAll(getSpikedFloor(position, 2, 3));
-                break;
-            case 3:
-                list.addAll(getFloorKillerWall(position));
-                break;
-            case 4:
-                list.addAll(getFloorWall(position));
-                break;
-            case 5:
-                list.add(getKillerFloorPrefab(position, true, true));
-                break;
-            case 6:
-                list.add(getFloor(position, true));
-                break;
+        switch (id) {
+            case 1 -> list.add(getMovingFloor(position));
+            case 2 -> list.addAll(getSpikedFloor(position, 2, 3));
+            case 3 -> list.addAll(getFloorKillerWall(position));
+            case 4 -> list.addAll(getFloorWall(position));
+            case 5 -> list.add(getKillerFloorPrefab(position, true, true));
+            case 6 -> list.add(getFloor(position, true));
         }
 
         return list;
@@ -101,7 +88,7 @@ public class LevelGenerator extends Component
         return Prefabs.generate(
                 "Moving Floor",
                 new Vector2f(80, position.y),
-                new Vector2f(64, 16), 0,
+                new Vector2f(64, 16),
                 new MovingFloor(),
                 new BoxBounds(),
                 new Rigidbody(1)
@@ -113,15 +100,6 @@ public class LevelGenerator extends Component
         List<GameObject> spikedFloor = new ArrayList<>();
         spikedFloor.add(getFloor(position, false));
         int xIndex = new Random().nextInt(max + 1 - min) + min;
-        spikedFloor.add(getSpikes(new Vector2f(position.x + (16 * xIndex), position.y + 16), new Vector2f(16, 16)));
-
-        return spikedFloor;
-    }
-
-    public List<GameObject> getSpikedFloor(Vector2f position, int xIndex)
-    {
-        List<GameObject> spikedFloor = new ArrayList<>();
-        spikedFloor.add(getFloor(position, false));
         spikedFloor.add(getSpikes(new Vector2f(position.x + (16 * xIndex), position.y + 16), new Vector2f(16, 16)));
 
         return spikedFloor;
@@ -153,7 +131,7 @@ public class LevelGenerator extends Component
         return Prefabs.generate(
                 "Killer Floor",
                 position,
-                size, 0,
+                size,
                 new KillerFloor(killInterval),
                 new BoxBounds(),
                 new Rigidbody(1)
@@ -165,7 +143,7 @@ public class LevelGenerator extends Component
         return Prefabs.generate(
                 "Killer Floor",
                 position,
-                new Vector2f(16, 33), 0,
+                new Vector2f(16, 33),
                 new KillerFloor(killInterval),
                 new BoxBounds(),
                 new Rigidbody(1)
@@ -182,20 +160,7 @@ public class LevelGenerator extends Component
         return Prefabs.generate(
                 "Floor",
                 position,
-                size, 0,
-                new BoxBounds(),
-                new RectRenderer(Color.LIGHT_GRAY, false)
-        );
-    }
-
-    public GameObject getFloor(Vector2f position, float sizeX)
-    {
-        Vector2f size = new Vector2f(sizeX, 16);
-
-        return Prefabs.generate(
-                "Floor",
-                position,
-                size, 0,
+                size,
                 new BoxBounds(),
                 new RectRenderer(Color.LIGHT_GRAY, false)
         );
@@ -206,7 +171,7 @@ public class LevelGenerator extends Component
         return Prefabs.generate(
                 "Wall",
                 position,
-                new Vector2f(16, 33), 0,
+                new Vector2f(16, 33),
                 new RectRenderer(Color.LIGHT_GRAY, false),
                 new BoxBounds(),
                 new Rigidbody(1)
@@ -218,7 +183,7 @@ public class LevelGenerator extends Component
         return Prefabs.generate(
                 "Spikes",
                 position,
-                scale, 0,
+                scale,
                 new Spikes(Color.ORANGE),
                 new Rigidbody(0),
                 new BoxBounds()

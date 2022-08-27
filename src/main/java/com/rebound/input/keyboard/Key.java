@@ -58,9 +58,4 @@ public class Key
         return state;
     }
 
-    public KeyState getQueuedState()
-    {
-        return queuedState;
-    }
-
 }

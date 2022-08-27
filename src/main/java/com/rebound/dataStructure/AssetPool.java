@@ -10,7 +10,7 @@ public class AssetPool
 {
 
     //          String, Font Size
-    private static Map<String, Font> fonts = new HashMap<>();
+    private static final Map<String, Font> fonts = new HashMap<>();
 
     public static Font getFont(String resource, int size)
     {

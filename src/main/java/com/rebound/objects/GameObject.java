@@ -9,24 +9,15 @@ import java.util.List;
 public class GameObject
 {
 
-    private static int ID_COUNTER = 0;
-    private int uid = -1;
-
-    private String name;
+    private final String name;
     private final List<Component> components;
     public Transform transform;
-    private boolean doSerialization = true;
     private transient boolean isDead = false;
-    private final int zIndex;
-    public boolean isPlayer = false;
 
-    public GameObject(String name, Transform transform, int zIndex) {
+    public GameObject(String name, Transform transform) {
         this.name = name;
-        this.zIndex = zIndex;
         this.components = new ArrayList<>();
         this.transform = transform;
-
-        this.uid = ID_COUNTER++;
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {
@@ -42,29 +33,6 @@ public class GameObject
         }
 
         return null;
-    }
-
-    public <T extends Component> List<T> getComponents(Class<T> componentClass)
-    {
-        List<T> comps = new ArrayList<>();
-
-        for (Component c : components)
-        {
-            if (componentClass.isAssignableFrom(c.getClass()))
-            {
-                try
-                {
-                    comps.add(componentClass.cast(c));
-                }
-                catch (ClassCastException e)
-                {
-                    e.printStackTrace();
-                    assert false : "Error: Casting component";
-                }
-            }
-        }
-
-        return comps;
     }
 
     public <T extends Component> boolean hasComponent(Class<T> componentClass)
@@ -97,8 +65,7 @@ public class GameObject
     public void update(double dt) {
         for (Component component : components)
         {
-            if (!component.isDisabled())
-                component.update(dt);
+            component.update(dt);
         }
     }
 
@@ -108,41 +75,14 @@ public class GameObject
         }
     }
 
-    public int zIndex() {
-        return this.zIndex;
-    }
-
     public String getName()
     {
         return this.name;
     }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public static void init(int maxId)
-    {
-        ID_COUNTER = maxId;
-    }
-
-    public int getUid()
-    {
-        return this.uid;
-    }
-
     public List<Component> getAllComponents()
     {
         return this.components;
-    }
-
-    public void setNoSerialize() {
-        this.doSerialization = false;
-    }
-
-    public boolean doSerialization() {
-        return this.doSerialization;
     }
 
     public boolean isDead()

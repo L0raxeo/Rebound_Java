@@ -96,23 +96,9 @@ public class Window implements Runnable
         }
     }
 
-    public Class<? extends Scene> getSceneFromSimpleClassName(String simpleClassName)
-    {
-        if (simpleClassName.equals(GameScene.class.getSimpleName()))
-            return GameScene.class;
-        else if (simpleClassName.equals(MenuScene.class.getSimpleName()))
-            return MenuScene.class;
-        else return null;
-    }
-
     public static Scene getScene()
     {
         return currentScene;
-    }
-
-    public static Rectangle getWindowBounds()
-    {
-        return new Rectangle(0, 0, getWidth(), getHeight());
     }
 
     @Override

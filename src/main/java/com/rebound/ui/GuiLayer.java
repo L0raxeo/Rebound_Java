@@ -15,11 +15,6 @@ public class GuiLayer
 
     private GuiLayer() {}
 
-    public void reset()
-    {
-        clear();
-    }
-
     public void onMouseMove(Vector2i mousePos, Vector2i mouseMoved, Vector2i mouseDragged)
     {
         for (GuiComponent c : getGuiComponents())
@@ -70,15 +65,6 @@ public class GuiLayer
     public List<GuiComponent> getGuiComponents()
     {
         return this.guiComponents;
-    }
-
-    public GuiComponent getGuiComponent(String name)
-    {
-        for (GuiComponent c : getGuiComponents())
-            if (c.name.equals(name))
-                return c;
-
-        return null;
     }
 
     public static GuiLayer getInstance()

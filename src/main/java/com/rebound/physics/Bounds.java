@@ -1,34 +1,19 @@
 package com.rebound.physics;
 
 import com.rebound.components.Component;
-import com.rebound.components.Spikes;
 import com.rebound.objects.GameObject;
-import com.rebound.window.Camera;
 import com.rebound.window.Window;
 import org.joml.Vector2f;
 
 import java.awt.*;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-
-enum BoundsType {
-    BOX,
-}
 
 public abstract class Bounds extends Component
 {
 
     public Rectangle bounds;
-    private boolean presetBounds = false;
-
-    public Bounds(Rectangle bounds)
-    {
-        presetBounds = true;
-        this.bounds = new Rectangle(bounds.x, Window.getHeight() - bounds.y, bounds.width, bounds.height);
-    }
 
     public Bounds()
     {
@@ -38,8 +23,7 @@ public abstract class Bounds extends Component
     @Override
     public void update(double dt)
     {
-        if (!presetBounds)
-            bounds.setRect(gameObject.transform.getScreenPosition().x, gameObject.transform.getScreenPosition().y, gameObject.transform.scale.x, gameObject.transform.scale.y);
+        bounds.setRect(gameObject.transform.getScreenPosition().x, gameObject.transform.getScreenPosition().y, gameObject.transform.scale.x, gameObject.transform.scale.y);
     }
 
     public List<Collision> findGameObjectsInPath(Vector2f velocity)
@@ -55,7 +39,7 @@ public abstract class Bounds extends Component
 
             if (predictedBounds.intersects(go.getComponent(Bounds.class).bounds))
             {
-                result.add(new Collision(velocity, gameObject.transform, go, gameObject));
+                result.add(new Collision(gameObject.transform, go, gameObject));
             }
         }
 
