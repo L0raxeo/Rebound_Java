@@ -1,6 +1,7 @@
 package com.rebound.scenes;
 
 import com.rebound.dataStructure.AssetPool;
+import com.rebound.file.FileLoader;
 import com.rebound.ui.GuiButton;
 import com.rebound.ui.GuiLayer;
 import com.rebound.ui.GuiText;
@@ -8,6 +9,7 @@ import com.rebound.window.Window;
 import org.joml.Vector2i;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class MenuScene extends Scene
 {
@@ -15,7 +17,9 @@ public class MenuScene extends Scene
     @Override
     public void loadResources()
     {
+        setBackdrop(Color.DARK_GRAY);
         AssetPool.getFont("assets/fonts/default_font.ttf", 24);
+        AssetPool.getFont("assets/fonts/default_font.ttf", 16);
         AssetPool.getFont("assets/fonts/default_font.ttf", 48);
     }
 
@@ -30,9 +34,7 @@ public class MenuScene extends Scene
                 AssetPool.getFont("assets/fonts/default_font.ttf", 24),
                 new Color[]{Color.LIGHT_GRAY, Color.DARK_GRAY},
                 false,
-                () -> {
-                    Window.changeScene(GameScene.class);
-                }
+                () -> Window.changeScene(GameScene.class)
         ));
     }
 
@@ -47,6 +49,19 @@ public class MenuScene extends Scene
                 AssetPool.getFont(
                         "assets/fonts/default_font.ttf", 48
                 ));
+
+        try {
+            GuiText.drawString(g,
+                    "Best Score: " + FileLoader.readFile("assets/saves/save.txt"),
+                    new Vector2i(240, 150),
+                    true,
+                    Color.LIGHT_GRAY,
+                    AssetPool.getFont(
+                            "assets/fonts/default_font.ttf", 16
+                    ));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

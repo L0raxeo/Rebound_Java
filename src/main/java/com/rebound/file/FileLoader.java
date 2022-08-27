@@ -1,8 +1,7 @@
 package com.rebound.file;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class FileLoader
 {
@@ -20,6 +19,20 @@ public class FileLoader
         }
 
         return null;
+    }
+
+    public static String readFile(String path) throws IOException
+    {
+        BufferedReader br = new BufferedReader(new FileReader(path));
+        return br.readLine();
+    }
+
+    public static void writeFile(String path, String data) throws IOException
+    {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+        bw.write(String.valueOf(data));
+        bw.flush();
+        bw.close();
     }
 
 }

@@ -86,6 +86,9 @@ public class Window implements Runnable
             }
 
             GuiLayer.getInstance().clear();
+
+            if (currentScene != null)
+                currentScene.onDestroy();
             currentScene = targetScene;
             currentScene.loadResources();
             currentScene.init();

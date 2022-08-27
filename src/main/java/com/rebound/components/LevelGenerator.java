@@ -225,4 +225,17 @@ public class LevelGenerator extends Component
         );
     }
 
+    @Override
+    public void onDestroy() {
+        nextGenerationLevel = 0;
+        if (lastObjPos == null)
+            lastObjPos = new Vector2f();
+        else
+        {
+            lastObjPos.x = 0;
+            lastObjPos.y = 0;
+        }
+
+        nextLevelY = 0;
+    }
 }

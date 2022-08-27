@@ -62,6 +62,11 @@ public abstract class Component
         this.disabled = false;
     }
 
+    public void onDestroy()
+    {
+
+    }
+
     public boolean isDisabled()
     {
         return this.disabled;

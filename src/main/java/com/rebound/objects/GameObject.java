@@ -153,6 +153,9 @@ public class GameObject
     public void die()
     {
         this.isDead = true;
+
+        for (Component c : getAllComponents())
+            c.onDestroy();
     }
 
 }

@@ -146,4 +146,9 @@ public abstract class Scene
         Window.setBackdrop(this.backdrop);
     }
 
+    public void onDestroy()
+    {
+
+    }
+
 }

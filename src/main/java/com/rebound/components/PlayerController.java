@@ -1,13 +1,16 @@
 package com.rebound.components;
 
+import com.rebound.file.FileLoader;
 import com.rebound.input.keyboard.KeyManager;
 import com.rebound.physics.Collision;
 import com.rebound.physics.CollisionType;
+import com.rebound.scenes.MenuScene;
 import com.rebound.window.Camera;
 import com.rebound.window.Window;
 import org.joml.Vector2f;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class PlayerController extends Component
 {
@@ -82,6 +85,19 @@ public class PlayerController extends Component
         for (Component c : collision.collider.getAllComponents())
             if (!c.equals(this))
                 c.onCollision(collision);
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        try {
+            if (Integer.parseInt(FileLoader.readFile("assets/saves/save.txt")) < Camera.getPosition().y)
+                FileLoader.writeFile("assets/saves/save.txt", String.valueOf((int) Camera.getPosition().y));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        Window.changeScene(MenuScene.class);
     }
 
 }

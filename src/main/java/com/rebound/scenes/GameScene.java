@@ -23,6 +23,7 @@ public class GameScene extends Scene
     @Override
     public void loadResources()
     {
+        setBackdrop(Color.DARK_GRAY);
         AssetPool.getFont("assets/fonts/default_font.ttf", 24);
     }
 
@@ -97,14 +98,18 @@ public class GameScene extends Scene
                 go.update(dt);
             }
         }
-        catch(ConcurrentModificationException ignore) {
-            for (GameObject go : getGameObjects()) {
-                // destroys objects below the camera
-                if (go.transform.getScreenPosition().y + Camera.yOffset() > Window.getHeight() && !go.equals(levelGenerator.gameObject))
-                    go.die();
+        catch(ConcurrentModificationException e) {
+            try
+            {
+                for (GameObject go : getGameObjects()) {
+                    // destroys objects below the camera
+                    if (go.transform.getScreenPosition().y + Camera.yOffset() > Window.getHeight() && !go.equals(levelGenerator.gameObject))
+                        go.die();
 
-                go.update(dt);
+                    go.update(dt);
+                }
             }
+            catch (ConcurrentModificationException ignore) {}
         }
 
         getGameObjects().removeIf(GameObject::isDead);
@@ -123,13 +128,26 @@ public class GameScene extends Scene
                     c.render(g);
             }
         }
-        catch (ConcurrentModificationException ignore) {
-            for (GameObject go : getGameObjects())
+        catch (ConcurrentModificationException e) {
+            try
             {
-                for (Component c : go.getAllComponents())
-                    c.render(g);
+                for (GameObject go : getGameObjects())
+                {
+                    for (Component c : go.getAllComponents())
+                        c.render(g);
+                }
             }
+            catch (ConcurrentModificationException ignore) {}
         }
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        Camera.setPosition(new Vector2f(0, 0));
+        points = 0;
+
+        getGameObjects().clear();
     }
 
 }
