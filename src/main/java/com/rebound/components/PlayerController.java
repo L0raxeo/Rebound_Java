@@ -90,13 +90,6 @@ public class PlayerController extends Component
     @Override
     public void onDestroy()
     {
-        try {
-            if (Integer.parseInt(FileLoader.readFile("assets/saves/save.txt")) < Camera.getPosition().y)
-                FileLoader.writeFile("assets/saves/save.txt", String.valueOf((int) Camera.getPosition().y));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
         Window.changeScene(MenuScene.class);
     }
 

@@ -3,6 +3,7 @@ package com.rebound.scenes;
 import com.rebound.components.*;
 import com.rebound.components.Component;
 import com.rebound.dataStructure.AssetPool;
+import com.rebound.file.FileLoader;
 import com.rebound.objects.GameObject;
 import com.rebound.prefabs.Prefabs;
 import com.rebound.ui.GuiText;
@@ -12,12 +13,14 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ConcurrentModificationException;
 
 public class GameScene extends Scene
 {
 
     private LevelGenerator levelGenerator;
+    private GameObject player;
     private int points = 0;
 
     @Override
@@ -40,6 +43,8 @@ public class GameScene extends Scene
                 new PlayerController(),
                 new RectRenderer(Color.RED, true)
         ));
+
+        player = getGameObject("Player");
 
         createFirstLevel();
     }
@@ -87,7 +92,8 @@ public class GameScene extends Scene
     @Override
     public void update(double dt)
     {
-        points = (int) Camera.getPosition().y;
+        if (player != null && points < (int) player.transform.position().y)
+            points = (int) player.transform.position().y;
 
         try {
             for (GameObject go : getGameObjects()) {
@@ -144,6 +150,13 @@ public class GameScene extends Scene
     @Override
     public void onDestroy()
     {
+        try {
+            if (Integer.parseInt(FileLoader.readFile("assets/saves/save.txt")) < points)
+                FileLoader.writeFile("assets/saves/save.txt", String.valueOf(points));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         Camera.reset();
         points = 0;
 
